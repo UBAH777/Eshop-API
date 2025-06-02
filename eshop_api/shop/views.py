@@ -1,18 +1,19 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Item, Vendor, Category
 from .serializers import ItemListSerializer, ItemDetailSerializer, ReviewCreateSerializer, VendorListSerializer, VendorDetailSerializer, CategoryDetailSerializer, CategoryListSerializer
-from .service import ItemFilter
+#from .service import ItemFilter
 
 
 class ItemListView(generics.ListAPIView):
     """Вывод списка товаров"""
     serializer_class = ItemListSerializer
-    filter_backends = (DjangoFilterBackend, )
-    filterset_class = ItemFilter
+    #filter_backends = (DjangoFilterBackend, )
+    #filterset_class = ItemFilter
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         items = Item.objects.all()
@@ -28,6 +29,7 @@ class ItemDetailView(generics.RetrieveAPIView):
 class ReviewCreateView(generics.CreateAPIView):
     """Добавление отзыва к товару"""
     serializer_class = ReviewCreateSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
 
 class VendorsListView(generics.ListAPIView):

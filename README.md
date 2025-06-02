@@ -1,0 +1,1 @@
+## This project provides API-service for Eshop - another project
